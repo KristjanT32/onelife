@@ -1,0 +1,26 @@
+languageName: "English (US)"
+
+commands:
+  onelife:
+    enabled: "&f[&cOne&4Life&f]: &eSuccessfully enabled OneLife."
+    disabled: "&f[&cOne&4Life&f]: &eDisabled OneLife. Reverting OneLife changes."
+
+    lives-set: "&f[&cOne&4Life&f]: &eUpdated lives for &b%player%&e, now: &d%lives%&e."
+    revived: "&f[&cOne&4Life&f]: &eRevived &b%player%. &aThey've been given &b%lives%&a."
+
+    dead: "&f[&cOne&4Life&f]: &b%player% &ehas already depleted all their lives."
+    deplete-done: "&f[&cOne&4Life&f]: &eDepleted &b%num%&e &b%player%&f's&e life."
+
+    getstat-response: "&e=======================================\n&bPlayer UUID: &a%uuid%\n&bLives left: &a%livesLeft%\n&bOneLife deaths: &a%deaths%\n&e======================================="
+    getstat-none: ""
+
+    playersnotfound: "&f[&cOne&4Life&f]: &cCould not find &b%player%&c."
+    less-or-zero: "&f[&cOne&4Life&f]: &cCannot set lives to &b%num%&c. &eTo deplete a life, use &f/onelife &7deplete <player>&c."
+
+messages:
+  life-depleted: "&b%player% &ejust lost a life. They've got &c%livesLeft%&e more. &aCareful!"
+
+  death-message-spectate: "&cYou've depleted all your lives. You are only allowed to spectate."
+  death-message-banned: "&cYou've depleted all your lives. You'll be banned until your lives are replenished."
+
+  ban-message: "&cYour lives will replenish in: &b%time%"

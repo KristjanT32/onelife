@@ -1,0 +1,4 @@
+name: OneLife
+version: '${project.version}'
+main: krisapps.onelife.OneLife
+api-version: '1.19'
