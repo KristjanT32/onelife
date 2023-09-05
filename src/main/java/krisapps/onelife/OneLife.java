@@ -1,8 +1,11 @@
 package krisapps.onelife;
 
-import krisapps.onelife.util.DataUtility;
-import krisapps.onelife.util.LocalizationUtility;
-import krisapps.onelife.util.MessageUtility;
+import krisapps.onelife.commands.LifeConfig;
+import krisapps.onelife.commands.LifeStats;
+import krisapps.onelife.commands.tabcompleter.OneLifeTab;
+import krisapps.onelife.events.listeners.GameModeChangeListener;
+import krisapps.onelife.events.listeners.PlayerDeathListener;
+import krisapps.onelife.util.*;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -23,6 +26,8 @@ public final class OneLife extends JavaPlugin {
     public DataUtility dataUtility = new DataUtility(this);
     public MessageUtility messageUtility = new MessageUtility(this);
     public LocalizationUtility localizationUtility = new LocalizationUtility(this);
+    public InfoUpdater infoUpdater = new InfoUpdater(this);
+    public LifeReplenishmentUtility replenishmentUtility = new LifeReplenishmentUtility(this);
 
     public FileConfiguration pluginConfig;
     public File configFile = new File(getDataFolder(), "config.yml");
@@ -37,16 +42,18 @@ public final class OneLife extends JavaPlugin {
 
     @Override
     public void onEnable() {
-        // Plugin startup logic
-
+        loadFiles();
+        registerCommands();
+        registerEvents();
+        infoUpdater.start();
+        replenishmentUtility.start();
     }
 
     @Override
     public void onDisable() {
-        // Plugin shutdown logic
+        infoUpdater.stop();
+        replenishmentUtility.stop();
     }
-
-    // TODO: Startup logic, life losing logic, ban logic
 
     private void loadFiles(){
         if (!configFile.getParentFile().exists() || !configFile.exists()) {
@@ -115,11 +122,15 @@ public final class OneLife extends JavaPlugin {
     }
 
     private void registerCommands(){
+        getCommand("onelife").setExecutor(new LifeConfig(this));
+        getCommand("life").setExecutor(new LifeStats(this));
 
+        getCommand("onelife").setTabCompleter(new OneLifeTab());
     }
 
     private void registerEvents(){
-
+        getServer().getPluginManager().registerEvents(new PlayerDeathListener(this), this);
+        getServer().getPluginManager().registerEvents(new GameModeChangeListener(this), this);
     }
 
     private void loadLocalizations() {
@@ -190,5 +201,16 @@ public final class OneLife extends JavaPlugin {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public void stopUtilities() {
+        infoUpdater.stop();
+        replenishmentUtility.stop();
+    }
+
+    public void startUtilities() {
+        infoUpdater.start();
+        replenishmentUtility.start();
+        reloadConfig();
     }
 }

@@ -7,10 +7,10 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-public class LiveConfig implements CommandExecutor {
+public class LifeConfig implements CommandExecutor {
 
     OneLife main;
-    public LiveConfig(OneLife main){
+    public LifeConfig(OneLife main){
         this.main = main;
     }
 
@@ -21,11 +21,20 @@ public class LiveConfig implements CommandExecutor {
         if (args.length >= 1){
             switch (operation) {
                 case "enable":
-                    main.dataUtility.setEnabled(true);
-                    main.messageUtility.sendMessage(sender, main.localizationUtility.getLocalizedPhrase("commands.onelife.enabled"));
+                    if (!main.dataUtility.isEnabled()){
+                        main.dataUtility.setEnabled(true);
+                        main.startUtilities();
+                        main.messageUtility.sendMessage(sender, main.localizationUtility.getLocalizedPhrase("commands.onelife.enabled"));
+
+                        for (Player p: Bukkit.getOnlinePlayers()){
+                            main.appendToLog("Creating a new OneLife entry for " + p.getName());
+                            main.dataUtility.createOneLifeEntry(p);
+                        }
+                    }
                     break;
                 case "disable":
                     main.dataUtility.setEnabled(false);
+                    main.stopUtilities();
                     main.messageUtility.sendMessage(sender, main.localizationUtility.getLocalizedPhrase("commands.onelife.disabled"));
                     break;
                 case "setlives":
@@ -61,6 +70,7 @@ public class LiveConfig implements CommandExecutor {
                         if (player != null) {
                             if (main.dataUtility.getLives(player) <= 0) {
                                 main.dataUtility.setLives(player, main.dataUtility.getDefaultLifeCount());
+                                main.dataUtility.resetPlayer(player);
                                 main.messageUtility.sendMessage(sender, main.localizationUtility.getLocalizedPhrase("commands.onelife.revived")
                                         .replaceAll("%player%", playerName)
                                         .replaceAll("%lives%", String.valueOf(main.dataUtility.getDefaultLifeCount()))
@@ -103,7 +113,6 @@ public class LiveConfig implements CommandExecutor {
                         Player player = Bukkit.getPlayer(playerName);
 
                         if (player != null) {
-
                             if (main.dataUtility.hasOneLifeRecord(player)){
                                 main.messageUtility.sendMessage(sender, main.localizationUtility.getLocalizedPhrase("commands.onelife.getstat-response")
                                         .replaceAll("%uuid%", player.getUniqueId().toString())
@@ -123,8 +132,11 @@ public class LiveConfig implements CommandExecutor {
                         }
                     }
                     break;
+                default:
+                    main.messageUtility.sendMessage(sender, main.localizationUtility.getLocalizedPhrase("commands.onelife.unknown-operation"));
+                    return false;
             }
         }
-        return false;
+        return true;
     }
 }

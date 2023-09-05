@@ -1,0 +1,25 @@
+# Configuration file for ${project.name} ${project.version}
+
+settings:
+
+  # Enabled/disables OneLife gamemode.
+  enabled: true
+
+  # Controls the language of the plugin. Plugin manages this field internally.
+  language: "en-US"
+
+  # How many lives does a player have by default?
+  default-life-number: 1
+
+  # What happens, when the player depletes all their lives?
+  # Can be 'ban' or 'spectate'
+  depletion-action: "ban"
+
+  # How long it takes for the lives to replenish, in minutes
+  life-replenishment-period: 1440
+
+  # Notify server operators when a spectator with 0 lives tries to switch game modes
+  notify-dirty-cheater: true
+
+  # Show the life counter in above the hotbar?
+  show-life-counter: true

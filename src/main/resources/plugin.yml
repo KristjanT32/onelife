@@ -2,3 +2,32 @@ name: OneLife
 version: '${project.version}'
 main: krisapps.onelife.OneLife
 api-version: '1.19'
+
+commands:
+  onelife:
+    description: "Manages all OneLife offers."
+    usage: "/onelife <enable|disable|setlives|revive|forcedeplete|getstat> <player> <num|none>"
+    permission: onelife.operator
+
+  life:
+    description: "Shows basic OneLife stats for the executing player."
+    usage: "/life"
+    permission: onelife.player
+
+permissions:
+  onelife.operator:
+    description: "Provides access to all of OneLife's commands."
+    default: op
+    children:
+      onelife.ignore: true
+      onelife.player: true
+
+  onelife.ignore:
+    description: "Allow players to ignore the consequences on death."
+    default: op
+    children:
+      onelife.player: true
+
+  onelife.player:
+    description: "Provides basic commands for players."
+    default: not op
