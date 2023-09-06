@@ -5,6 +5,7 @@ import krisapps.onelife.commands.LifeStats;
 import krisapps.onelife.commands.tabcompleter.OneLifeTab;
 import krisapps.onelife.events.listeners.GameModeChangeListener;
 import krisapps.onelife.events.listeners.PlayerDeathListener;
+import krisapps.onelife.events.listeners.PlayerLoginListener;
 import krisapps.onelife.util.*;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -131,6 +132,7 @@ public final class OneLife extends JavaPlugin {
     private void registerEvents(){
         getServer().getPluginManager().registerEvents(new PlayerDeathListener(this), this);
         getServer().getPluginManager().registerEvents(new GameModeChangeListener(this), this);
+        getServer().getPluginManager().registerEvents(new PlayerLoginListener(this), this);
     }
 
     private void loadLocalizations() {
