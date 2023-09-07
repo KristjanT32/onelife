@@ -6,7 +6,7 @@
 
     <groupId>krisapps</groupId>
     <artifactId>OneLife</artifactId>
-    <version>1.0-1.19</version>
+    <version>1.01-1.19</version>
     <packaging>jar</packaging>
 
     <name>OneLife</name>

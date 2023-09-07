@@ -49,3 +49,7 @@ messages:
 
   player-died: "&b%player%&c died. They've got no lives left."
   player-died-noncrit: "&b%player%&c died. &eThey've still got &b%lives% lives &eleft."
+
+deathlogger:
+  logmsg: "=========================================\nPlayer: %player%\nDeath Position: %deathPosition%\nDeath Expires at: %deathExpiration%\n=========================================\n\n"
+  logmsg-dead: "=========================================\nPlayer: %player%\nDeath Position: %deathPosition%\nLives Left: %lives%\n=========================================\n\n"

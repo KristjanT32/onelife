@@ -23,3 +23,6 @@ settings:
 
   # Show the life counter in above the hotbar?
   show-life-counter: true
+
+  # Enable death logging?
+  enable-deathlogger: true

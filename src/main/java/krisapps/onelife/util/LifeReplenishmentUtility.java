@@ -71,7 +71,7 @@ public class LifeReplenishmentUtility {
                                 Location dLoc = main.dataUtility.getDeathLocation(onlinePlayer);
                                 TextComponent button = new TextComponent(ChatColor.translateAlternateColorCodes('&', main.localizationUtility.getLocalizedPhrase("messages.teleport-button")));
 
-                                button.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/teleport @p " + dLoc.getBlockX() + " " + dLoc.getBlockY() + " " + dLoc.getBlockZ()));
+                                button.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/teleport " + onlinePlayer.getName() + " " + dLoc.getBlockX() + " " + dLoc.getBlockY() + " " + dLoc.getBlockZ()));
                                 onlinePlayer.spigot().sendMessage(
                                         new TextComponent(ChatColor.translateAlternateColorCodes('&', main.localizationUtility.getLocalizedPhrase("messages.teleport"))),
                                         button

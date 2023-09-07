@@ -39,16 +39,22 @@ public class DataUtility {
 
     public void depleteLife(Player p, int numberOfLivesToDeplete, boolean forced){
         if (main.pluginData.getInt("onelife.players." + p.getUniqueId() + ".lives") - numberOfLivesToDeplete <= 0){
+
+            Date expirationDate = generateExpirationDate(Date.from(Instant.now()), getReplenishmentPeriod());
             main.pluginData.set("onelife.players." + p.getUniqueId() + ".lives", 0);
             main.pluginData.set("onelife.players." + p.getUniqueId() + ".deathTime", Date.from(Instant.now()));
-            main.pluginData.set("onelife.players." + p.getUniqueId() + ".deathExpiration", generateExpirationDate(Date.from(Instant.now()), getReplenishmentPeriod()));
+            main.pluginData.set("onelife.players." + p.getUniqueId() + ".deathExpiration", expirationDate);
             main.pluginData.set("onelife.players." + p.getUniqueId() + ".deathPosition", p.getLocation());
             main.pluginData.set("onelife.players." + p.getUniqueId() + ".playerName", p.getName());
             main.saveData();
+
+            main.deathLogger.logFinalDeath(p, p.getLocation(), expirationDate);
         } else {
             main.pluginData.set("onelife.players." + p.getUniqueId() + ".lives", main.pluginData.getInt("onelife.players." + p.getUniqueId() + ".lives") - 1);
             main.pluginData.set("onelife.players." + p.getUniqueId() + ".playerName", p.getName());
             main.saveData();
+
+            main.deathLogger.logDeath(p, p.getLocation(), getLives(p));
         }
     }
 

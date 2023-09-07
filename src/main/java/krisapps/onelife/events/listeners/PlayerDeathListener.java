@@ -84,7 +84,6 @@ public class PlayerDeathListener implements Listener {
                 event.getPlayer().setGameMode(GameMode.SPECTATOR);
                 main.messageUtility.sendMessage(event.getPlayer(), main.localizationUtility.getLocalizedPhrase("messages.spectate-message"));
             }
-
         } else {
             // If the player still has lives left
 

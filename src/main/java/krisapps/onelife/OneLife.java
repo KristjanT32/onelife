@@ -29,6 +29,7 @@ public final class OneLife extends JavaPlugin {
     public LocalizationUtility localizationUtility = new LocalizationUtility(this);
     public InfoUpdater infoUpdater = new InfoUpdater(this);
     public LifeReplenishmentUtility replenishmentUtility = new LifeReplenishmentUtility(this);
+    public DeathLogger deathLogger = new DeathLogger(this);
 
     public FileConfiguration pluginConfig;
     public File configFile = new File(getDataFolder(), "config.yml");
@@ -40,6 +41,7 @@ public final class OneLife extends JavaPlugin {
     public File localizationFile = new File(getDataFolder(), "/localization/localization.yml");
 
     File logFile = new File(getDataFolder(), "one-life.log");
+    File deathLogFile = new File(getDataFolder(), "deathlog.log");
 
     @Override
     public void onEnable() {
@@ -198,6 +200,16 @@ public final class OneLife extends JavaPlugin {
     public void appendToLog(String msg) {
         try {
             BufferedWriter bw = new BufferedWriter(new FileWriter(logFile, true));
+            bw.append("\n").append(msg);
+            bw.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void appendToDeathLog(String msg) {
+        try {
+            BufferedWriter bw = new BufferedWriter(new FileWriter(deathLogFile, true));
             bw.append("\n").append(msg);
             bw.close();
         } catch (IOException e) {
