@@ -176,7 +176,6 @@ public final class OneLife extends JavaPlugin {
         localizationUtility.setupCurrentLanguageFile();
     }
 
-    @Override
     public void saveConfig(){
         try {
             pluginConfig.save(configFile);

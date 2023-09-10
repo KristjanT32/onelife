@@ -6,6 +6,7 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.EntityDamageEvent;
 
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
 
@@ -27,14 +28,15 @@ public class DeathLogger {
         );
     }
 
-    public void logFinalDeath(Player p, Location deathPosition, Date expiration) {
+    public void logFinalDeath(Player p, Location deathPosition, LocalDateTime expiration) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/ss HH:mm:ss");
 
         if (!main.pluginConfig.getBoolean("settings.enable-deathlogger")) { return; }
 
         main.appendToDeathLog(main.localizationUtility.getLocalizedPhrase("deathlogger.logmsg")
                 .replaceAll("%player%", p.getName())
                 .replaceAll("%deathPosition%", "X: " + deathPosition.getBlockX() + " Y: " + deathPosition.getBlockY() + " Z: " + deathPosition.getBlockZ() + ", world: " + deathPosition.getWorld().getName())
-                .replaceAll("%deathExpiration%", DateTimeFormatter.ofPattern("dd:MM:ss hh:mm:ss").format(expiration.toInstant()))
+                .replaceAll("%deathExpiration%", formatter.format(expiration))
         );
     }
 

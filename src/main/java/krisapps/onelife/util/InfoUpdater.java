@@ -23,6 +23,9 @@ public class InfoUpdater {
         stop();
         MODIFIER_TASK = Bukkit.getScheduler().scheduleAsyncRepeatingTask(main, () -> modifierCycle(), 0, 20L);
 
+        if (!main.dataUtility.isEnabled()) {
+            stop();
+        }
     }
 
     public void stop(){

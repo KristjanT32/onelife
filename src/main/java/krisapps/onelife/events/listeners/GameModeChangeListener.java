@@ -2,6 +2,7 @@ package krisapps.onelife.events.listeners;
 
 import krisapps.onelife.OneLife;
 import org.bukkit.Bukkit;
+import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -20,10 +21,9 @@ public class GameModeChangeListener implements Listener {
     @EventHandler
     public void onGamemodeChange(PlayerGameModeChangeEvent event){
         if (!main.dataUtility.isEnabled()) { return; }
-        if (event.getPlayer().isOp()) { return; }
         if (event.getPlayer().hasPermission("onelife.ignore")) { return; }
 
-        if (main.dataUtility.hasDied(event.getPlayer())){
+        if (main.dataUtility.hasDied(event.getPlayer()) && !event.getNewGameMode().equals(GameMode.SPECTATOR)){
             event.setCancelled(true);
             main.messageUtility.sendMessage(event.getPlayer(), main.localizationUtility.getLocalizedPhrase("messages.gmchange-fail"));
             if (main.pluginConfig.getBoolean("settings.notify-dirty-cheater")) {

@@ -48,7 +48,7 @@ public class DataUtility {
             main.pluginData.set("onelife.players." + p.getUniqueId() + ".playerName", p.getName());
             main.saveData();
 
-            main.deathLogger.logFinalDeath(p, p.getLocation(), expirationDate);
+            main.deathLogger.logFinalDeath(p, p.getLocation(), LocalDateTime.ofInstant(expirationDate.toInstant(), ZoneId.systemDefault()));
         } else {
             main.pluginData.set("onelife.players." + p.getUniqueId() + ".lives", main.pluginData.getInt("onelife.players." + p.getUniqueId() + ".lives") - 1);
             main.pluginData.set("onelife.players." + p.getUniqueId() + ".playerName", p.getName());

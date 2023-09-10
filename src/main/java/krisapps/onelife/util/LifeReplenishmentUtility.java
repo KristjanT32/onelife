@@ -32,6 +32,10 @@ public class LifeReplenishmentUtility {
 
                 main.appendToLog("[System]: Checking player death expiration dates");
 
+                if (!main.dataUtility.isEnabled()) {
+                    stop();
+                }
+
                 // Replenish all eligible players' lives.
                 for (String playerUUID: main.dataUtility.getPlayers()) {
                     OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayer(UUID.fromString(playerUUID));
